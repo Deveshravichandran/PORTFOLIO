@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sun, Moon, Menu, X, Terminal } from 'lucide-react';
+import { Sun, Moon, Menu, X } from 'lucide-react';
 
 const navItems = [
   { name: 'About', href: '#about' },
@@ -46,11 +46,10 @@ export default function Navbar() {
           {/* Logo Section */}
           <motion.a
             href="#"
-            className="flex items-center space-x-2 text-xl font-bold font-outfit"
+            className="flex items-center text-xl font-bold font-outfit"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Terminal className="h-5 w-5 text-indigo-500" />
             <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 bg-clip-text text-transparent">
               Devesh.R
             </span>
