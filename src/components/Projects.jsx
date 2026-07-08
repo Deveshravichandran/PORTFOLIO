@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowRight, CheckCircle2, ShieldCheck, Database, Search, Calculator, FileJson } from 'lucide-react';
+import { ExternalLink, ArrowRight, CheckCircle2, ShieldCheck, Database, Search, Calculator, FileJson, Activity, Bot, Eye, HelpCircle } from 'lucide-react';
 
 const Github = (props) => (
   <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -8,7 +8,6 @@ const Github = (props) => (
     <path d="M9 18c-4.51 2-5-2-7-2" />
   </svg>
 );
-
 
 const projectsList = [
   {
@@ -23,28 +22,64 @@ const projectsList = [
   {
     id: 'loan-stress-monitor',
     title: 'Loan Portfolio Stress Monitor',
-    description: 'Extension of the risk agent — ingests live news, runs it through a LoRA fine-tuned LLaMA classifier, and uses a ReAct agent with deterministic tools to produce Pydantic v2-validated structured output, visualized in a Streamlit dashboard.',
+    icon: Activity,
+    iconColor: 'text-amber-500',
+    iconBg: 'bg-amber-500/10',
+    description: 'Extension of the risk agent designed to run stress tests under dynamic economic scenarios.',
+    bullets: [
+      'Ingests live financial news feeds and articles for real-time market risk signal detection.',
+      'Classifies news sentiment and impact severity using a custom LoRA fine-tuned LLaMA model.',
+      'Orchestrates decisions using a ReAct agent linked to deterministic mathematical calculation tools.',
+      'Outputs structured data validated by Pydantic v2 schemas into a Streamlit dashboard.'
+    ],
     tags: ['Python', 'LoRA Fine-tuning', 'ReAct Agents', 'Pydantic v2', 'Streamlit'],
     github: null,
   },
   {
     id: 'pdf-chatbot',
     title: 'PDF Chatbot',
-    description: 'Document Q&A chatbot using RecursiveCharacterTextSplitter for chunking and Gemma2 via Ollama for local inference. Built to support private, on-premise enterprise file searches.',
+    icon: Database,
+    iconColor: 'text-sky-500',
+    iconBg: 'bg-sky-500/10',
+    description: 'Document Q&A chatbot using RecursiveCharacterTextSplitter for chunking and Gemma2 via Ollama for local inference.',
+    bullets: [
+      'Performs local inference using Google Gemma2 (via Ollama) to guarantee absolute data privacy.',
+      'Implements LangChain\'s RecursiveCharacterTextSplitter for token-optimized document chunking.',
+      'Indexes document embeddings in a local FAISS vector store for semantic similarity search.',
+      'Includes Streamlit UI built with robust exception handling and document parsing (PyPDF2).'
+    ],
     tags: ['Python', 'Streamlit', 'Ollama / Gemma2', 'LangChain'],
     github: 'https://github.com/Deveshravichandran/PDF-CHATBOT',
   },
   {
     id: 'enterprise-assistant',
     title: 'AI-Driven Intelligent Enterprise Assistant',
+    icon: Bot,
+    iconColor: 'text-purple-500',
+    iconBg: 'bg-purple-500/10',
     description: 'Dual-chatbot system (Policy Bot + Employee Assistant) with PDF/image summarization via Gemini 2B, Elasticsearch-backed retrieval, and a secure microservice pipeline via API Gateway.',
+    bullets: [
+      'Constructed a dual-bot framework (Policy Bot for HR rules & Employee Assistant for technical Q&A).',
+      'Integrated Gemini 2B for multi-modal image analysis and document summarization.',
+      'Backed retrieval with Elasticsearch to enable high-throughput full-text search across documentation.',
+      'Secured communication pipelines between microservices utilizing an Express.js API Gateway.'
+    ],
     tags: ['React.js', 'Express.js', 'Ollama', 'Gemini 2B', 'Elasticsearch', 'PostgreSQL'],
     github: null,
   },
   {
     id: 'synthesight',
     title: 'Synthesight — Frame Interpolation & Explanatory Module',
-    description: 'Collaborative final-year project focusing on video frame interpolation with an explainability-focused module to inspect temporal features that drive interpolation decisions.',
+    icon: Eye,
+    iconColor: 'text-emerald-500',
+    iconBg: 'bg-emerald-500/10',
+    description: 'Collaborative final-year project focusing on video frame interpolation with an explainability-focused module.',
+    bullets: [
+      'Co-developed a deep learning pipeline generating intermediate frames from sparse video inputs.',
+      'Integrated Explainable AI (XAI) modules to dissect which temporal motion features drive model decisions.',
+      'Extended explainability frameworks beyond static images into the video time-series domain.',
+      'Marked clearly as collaborative, utilizing PyTorch and advanced visualization tools.'
+    ],
     tags: ['Final-Year Project', 'Deep Learning', 'XAI Techniques', 'Collaborative'],
     isTeam: true,
     github: null,
@@ -191,60 +226,84 @@ export default function Projects() {
 
         {/* Other Projects Grid */}
         <div className="grid md:grid-cols-2 gap-6">
-          {projectsList.filter(p => !p.isFlagship).map((project, idx) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -5 }}
-              className="rounded-2xl p-6 border border-gray-200 dark:border-gray-800/60 bg-white/50 dark:bg-darkBg-card/40 glassmorphism hover:border-indigo-500/40 hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
-            >
-              <div className="space-y-4">
-                <div className="flex items-start justify-between">
-                  <h4 className="text-xl font-bold font-outfit text-gray-900 dark:text-white group-hover:text-indigo-500">
-                    {project.title}
-                  </h4>
-                  {project.isTeam && (
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
-                      Team Project
-                    </span>
+          {projectsList.filter(p => !p.isFlagship).map((project, idx) => {
+            const IconComponent = project.icon || HelpCircle;
+            return (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -5 }}
+                className="rounded-2xl p-6 border border-indigo-500/15 dark:border-indigo-500/15 bg-gradient-to-br from-indigo-950/5 via-darkBg-card to-emerald-950/5 glassmorphism hover:border-indigo-500/35 hover:shadow-[0_0_30px_rgba(99,102,241,0.08)] transition-all duration-300 flex flex-col justify-between"
+              >
+                <div className="space-y-4">
+                  {/* Card Header with Icon */}
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className={`p-2.5 rounded-xl ${project.iconBg} ${project.iconColor} flex-shrink-0`}>
+                        <IconComponent className="h-5 w-5" />
+                      </div>
+                      <h4 className="text-lg font-bold font-outfit text-white leading-tight">
+                        {project.title}
+                      </h4>
+                    </div>
+                    {project.isTeam && (
+                      <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full flex-shrink-0">
+                        Team Project
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Intro Description */}
+                  <p className="text-xs sm:text-sm text-gray-300 leading-relaxed font-outfit">
+                    {project.description}
+                  </p>
+
+                  {/* Implementation Bullets */}
+                  {project.bullets && (
+                    <ul className="space-y-2 pt-2 border-t border-gray-800">
+                      {project.bullets.map((bullet, bIdx) => (
+                        <li key={bIdx} className="flex items-start text-xs text-gray-400">
+                          <CheckCircle2 className="h-3.5 w-3.5 text-indigo-500 mr-2 mt-0.5 flex-shrink-0" />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
                   )}
                 </div>
 
-                <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-                  {project.description}
-                </p>
-              </div>
+                <div className="space-y-4 mt-6">
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-1.5 pt-2">
+                    {project.tags.map(tag => (
+                      <span
+                        key={tag}
+                        className="px-2.5 py-0.5 text-[10px] rounded font-medium border border-gray-700 bg-gray-950 text-gray-400"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
 
-              <div className="space-y-4 mt-6">
-                <div className="flex flex-wrap gap-1.5">
-                  {project.tags.map(tag => (
-                    <span
-                      key={tag}
-                      className="px-2 py-0.5 text-[10px] rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
+                  {/* Links */}
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-xs font-semibold text-indigo-500 hover:text-indigo-400 transition-colors pt-1"
                     >
-                      {tag}
-                    </span>
-                  ))}
+                      <Github className="h-3.5 w-3.5 mr-1.5" />
+                      <span>View Repository</span>
+                      <ExternalLink className="h-3.5 w-3.5 ml-1" />
+                    </a>
+                  )}
                 </div>
-
-                {project.github && (
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-xs font-semibold text-indigo-500 hover:text-indigo-400 transition-colors"
-                  >
-                    <Github className="h-3.5 w-3.5 mr-1" />
-                    <span>View Repository</span>
-                    <ExternalLink className="h-3.5 w-3.5 ml-1" />
-                  </a>
-                )}
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
 
       </div>
