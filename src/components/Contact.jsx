@@ -146,7 +146,7 @@ export default function Contact() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="John Doe"
-                      className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-800 bg-white/50 dark:bg-black/30 text-white placeholder-gray-500 focus:border-indigo-500 focus:outline-none text-sm transition-all"
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-800 bg-white dark:bg-black/30 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-indigo-500 focus:outline-none text-sm transition-all"
                     />
                   </div>
 
@@ -159,7 +159,7 @@ export default function Contact() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="john@example.com"
-                      className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-800 bg-white/50 dark:bg-black/30 text-white placeholder-gray-500 focus:border-indigo-500 focus:outline-none text-sm transition-all"
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-800 bg-white dark:bg-black/30 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-indigo-500 focus:outline-none text-sm transition-all"
                     />
                   </div>
                 </div>
@@ -173,7 +173,7 @@ export default function Contact() {
                     value={formData.subject}
                     onChange={handleChange}
                     placeholder="AI/ML Engineer role opportunities"
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-800 bg-white/50 dark:bg-black/30 text-white placeholder-gray-500 focus:border-indigo-500 focus:outline-none text-sm transition-all"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-800 bg-white dark:bg-black/30 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-indigo-500 focus:outline-none text-sm transition-all"
                   />
                 </div>
 
@@ -186,7 +186,7 @@ export default function Contact() {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Write your message here..."
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-800 bg-white/50 dark:bg-black/30 text-white placeholder-gray-500 focus:border-indigo-500 focus:outline-none text-sm transition-all resize-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-800 bg-white dark:bg-black/30 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-indigo-500 focus:outline-none text-sm transition-all resize-none"
                   ></textarea>
                 </div>
 

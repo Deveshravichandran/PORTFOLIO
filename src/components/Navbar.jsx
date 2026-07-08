@@ -21,19 +21,23 @@ export default function Navbar() {
     if (savedTheme === 'light') {
       setIsLight(true);
       document.body.classList.add('light-theme');
+      document.documentElement.classList.remove('dark');
     } else {
       setIsLight(false);
       document.body.classList.remove('light-theme');
+      document.documentElement.classList.add('dark');
     }
   }, []);
 
   const toggleTheme = () => {
     if (isLight) {
       document.body.classList.remove('light-theme');
+      document.documentElement.classList.add('dark');
       localStorage.setItem('theme', 'dark');
       setIsLight(false);
     } else {
       document.body.classList.add('light-theme');
+      document.documentElement.classList.remove('dark');
       localStorage.setItem('theme', 'light');
       setIsLight(true);
     }
