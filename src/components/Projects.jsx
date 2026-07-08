@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowRight, CheckCircle2, ShieldCheck, Database, Search, Calculator, FileJson, Activity, Bot, Eye, HelpCircle, PlayCircle, Loader2 } from 'lucide-react';
+import { ExternalLink, ArrowRight, CheckCircle2, ShieldCheck, Database, Search, Calculator, FileJson, Activity, Bot, Eye, HelpCircle, PlayCircle, Loader2, Upload, Send, MessageSquare } from 'lucide-react';
 
 const Github = (props) => (
   <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -79,7 +79,7 @@ function RiskSimulator() {
 
   return (
     <div className="border border-gray-800 bg-gray-950/80 rounded-2xl p-5 shadow-2xl relative overflow-hidden flex flex-col h-full">
-      <div className="absolute top-0 right-0 p-2 opacity-10">
+      <div className="absolute top-0 right-0 p-2 opacity-10 pointer-events-none">
         <Calculator size={80} />
       </div>
       
@@ -176,6 +176,148 @@ function RiskSimulator() {
     </div>
   );
 }
+
+// --- PDF Chat Simulator Subcomponent ---
+function PdfChatSimulator() {
+  const [messages, setMessages] = useState([
+    { role: 'assistant', text: 'Hello! I am the local Gemma2 agent. Upload a mock PDF to begin.' }
+  ]);
+  const [isUploading, setIsUploading] = useState(false);
+  const [isPdfReady, setIsPdfReady] = useState(false);
+  const [input, setInput] = useState('');
+  const [isThinking, setIsThinking] = useState(false);
+  const chatEndRef = useRef(null);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isThinking]);
+
+  const handleUpload = () => {
+    setIsUploading(true);
+    setTimeout(() => {
+      setIsUploading(false);
+      setIsPdfReady(true);
+      setMessages(prev => [
+        ...prev,
+        { role: 'system', text: '[System]: PDF parsed successfully.' },
+        { role: 'system', text: '[System]: 42 chunks embedded into local FAISS vector store.' },
+        { role: 'assistant', text: 'Document ingested! Ask me anything about its contents.' }
+      ]);
+    }, 2500);
+  };
+
+  const handleSend = (e) => {
+    e.preventDefault();
+    if (!input.trim() || !isPdfReady || isThinking) return;
+    
+    const userMsg = input;
+    setInput('');
+    setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
+    setIsThinking(true);
+
+    setTimeout(() => {
+      setIsThinking(false);
+      setMessages(prev => [
+        ...prev,
+        { role: 'system', text: '[Retrieval]: FAISS top-k=3 chunks retrieved based on semantic similarity.' },
+        { role: 'assistant', text: `Based on the document context retrieved, this is a simulated local response from Gemma2 running entirely offline to guarantee data privacy.` }
+      ]);
+    }, 1800);
+  };
+
+  return (
+    <div className="border border-gray-800 bg-gray-950/80 rounded-2xl p-5 shadow-2xl relative overflow-hidden flex flex-col h-full min-h-[400px]">
+      <div className="absolute top-0 right-0 p-2 opacity-5 pointer-events-none">
+        <MessageSquare size={80} />
+      </div>
+      
+      <div className="flex items-center justify-between mb-4 relative z-10">
+        <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest font-outfit flex items-center">
+          <Database className="w-3.5 h-3.5 mr-1.5 text-sky-400" />
+          Local Inference UI
+        </h4>
+        <div className={`px-2 py-0.5 rounded text-[10px] font-bold ${isPdfReady ? 'bg-sky-500/20 text-sky-300' : 'bg-gray-800 text-gray-500'}`}>
+          {isPdfReady ? 'MODEL LOADED' : 'WAITING FOR DOC'}
+        </div>
+      </div>
+
+      {!isPdfReady && (
+        <div className="flex-1 flex flex-col items-center justify-center space-y-4 relative z-10">
+          <button 
+            onClick={handleUpload}
+            disabled={isUploading}
+            className="px-6 py-3 rounded-xl border border-sky-500/30 bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 text-sm font-semibold flex items-center transition-all disabled:opacity-50"
+          >
+            {isUploading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : <Upload className="w-5 h-5 mr-2" />}
+            {isUploading ? 'Chunking & Embedding...' : 'Upload Mock PDF'}
+          </button>
+          {isUploading && (
+            <div className="w-48 h-1.5 bg-gray-800 rounded-full overflow-hidden">
+              <motion.div 
+                className="h-full bg-sky-500" 
+                initial={{ width: 0 }} 
+                animate={{ width: '100%' }} 
+                transition={{ duration: 2.5 }} 
+              />
+            </div>
+          )}
+        </div>
+      )}
+
+      {isPdfReady && (
+        <div className="flex-1 flex flex-col relative z-10 bg-black/40 rounded-xl border border-gray-800/80 overflow-hidden">
+          {/* Chat Messages */}
+          <div className="flex-1 p-4 overflow-y-auto space-y-3 max-h-[220px]">
+            {messages.map((msg, idx) => (
+              <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div 
+                  className={`max-w-[85%] rounded-xl px-3 py-2 text-xs leading-relaxed ${
+                    msg.role === 'user' 
+                    ? 'bg-sky-600 text-white rounded-br-sm' 
+                    : msg.role === 'system'
+                    ? 'bg-gray-900 border border-gray-800 text-emerald-400 font-mono text-[10px] w-full text-center'
+                    : 'bg-gray-800 text-gray-200 rounded-bl-sm border border-gray-700'
+                  }`}
+                >
+                  {msg.text}
+                </div>
+              </div>
+            ))}
+            {isThinking && (
+              <div className="flex justify-start">
+                <div className="bg-gray-800 rounded-xl rounded-bl-sm px-4 py-3 border border-gray-700 flex items-center space-x-1">
+                  <motion.div className="w-1.5 h-1.5 bg-gray-500 rounded-full" animate={{ y: [0, -3, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0 }} />
+                  <motion.div className="w-1.5 h-1.5 bg-gray-500 rounded-full" animate={{ y: [0, -3, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }} />
+                  <motion.div className="w-1.5 h-1.5 bg-gray-500 rounded-full" animate={{ y: [0, -3, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.4 }} />
+                </div>
+              </div>
+            )}
+            <div ref={chatEndRef} />
+          </div>
+
+          {/* Chat Input */}
+          <form onSubmit={handleSend} className="p-2 bg-gray-900 border-t border-gray-800 flex items-center space-x-2">
+            <input 
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Ask a question about the PDF..."
+              disabled={isThinking}
+              className="flex-1 bg-black/50 border border-gray-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500 disabled:opacity-50"
+            />
+            <button 
+              type="submit"
+              disabled={!input.trim() || isThinking}
+              className="p-2 rounded-lg bg-sky-600 text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-sky-500 transition-colors"
+            >
+              <Send className="w-4 h-4" />
+            </button>
+          </form>
+        </div>
+      )}
+    </div>
+  );
+}
 // ------------------------------------
 
 const projectsList = [
@@ -183,10 +325,21 @@ const projectsList = [
     id: 'loan-risk-agent',
     title: 'Loan Portfolio Risk Agent',
     isFlagship: true,
+    simulator: RiskSimulator,
     description: 'Agentic RAG system for credit risk analysis. Combines FAISS-based retrieval over loan documents, live web search via DuckDuckGo for real-time market signals, and Llama 3 (via Ollama) with chain-of-thought reasoning to produce structured JSON risk assessments. Includes a custom evals framework benchmarked against a curated golden dataset.',
     corePrinciple: 'Key design principle: all arithmetic runs through deterministic tools, not the LLM, to avoid hallucinated numbers in a financial context.',
     tags: ['Python', 'LangChain', 'FAISS', 'Ollama / Llama3', 'Agentic Tool Use', 'Evals'],
     github: 'https://github.com/Deveshravichandran/LOAN-PORTFOLIO-RISK-AGENT',
+  },
+  {
+    id: 'pdf-chatbot',
+    title: 'PDF Document Q&A Chatbot',
+    isFlagship: true,
+    simulator: PdfChatSimulator,
+    description: 'Document Q&A chatbot using LangChain\'s RecursiveCharacterTextSplitter for token-optimized document chunking, FAISS for dense vector retrieval, and Google Gemma2 via Ollama for entirely local inference.',
+    corePrinciple: 'Privacy-First Architecture: 100% of document embedding and LLM inference executes locally, guaranteeing zero data leakage for sensitive enterprise PDFs.',
+    tags: ['Python', 'Streamlit', 'Ollama / Gemma2', 'LangChain', 'FAISS'],
+    github: 'https://github.com/Deveshravichandran/PDF-CHATBOT',
   },
   {
     id: 'loan-stress-monitor',
@@ -203,22 +356,6 @@ const projectsList = [
     ],
     tags: ['Python', 'LoRA Fine-tuning', 'ReAct Agents', 'Pydantic v2', 'Streamlit'],
     github: null,
-  },
-  {
-    id: 'pdf-chatbot',
-    title: 'PDF Chatbot',
-    icon: Database,
-    iconColor: 'text-sky-500',
-    iconBg: 'bg-sky-500/10',
-    description: 'Document Q&A chatbot using RecursiveCharacterTextSplitter for chunking and Gemma2 via Ollama for local inference.',
-    bullets: [
-      'Performs local inference using Google Gemma2 (via Ollama) to guarantee absolute data privacy.',
-      'Implements LangChain\'s RecursiveCharacterTextSplitter for token-optimized document chunking.',
-      'Indexes document embeddings in a local FAISS vector store for semantic similarity search.',
-      'Includes Streamlit UI built with robust exception handling and document parsing (PyPDF2).'
-    ],
-    tags: ['Python', 'Streamlit', 'Ollama / Gemma2', 'LangChain'],
-    github: 'https://github.com/Deveshravichandran/PDF-CHATBOT',
   },
   {
     id: 'enterprise-assistant',
@@ -336,7 +473,7 @@ export default function Projects() {
 
               {/* Right Column: Interactive Simulator */}
               <div className="lg:col-span-5 h-full">
-                <RiskSimulator />
+                {project.simulator && <project.simulator />}
               </div>
 
             </div>
