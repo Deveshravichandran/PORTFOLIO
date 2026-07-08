@@ -53,10 +53,10 @@ export default function About() {
                 <Briefcase className="h-6 w-6" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Current Internship</h3>
+                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">DevOps Experience</h3>
                 <p className="font-outfit font-bold text-lg mt-1">CaratLane</p>
                 <p className="text-sm text-gray-400">DevOps Intern</p>
-                <p className="text-xs text-gray-500 mt-1">Jan 2025 – Present</p>
+                <p className="text-xs text-gray-500 mt-1">Jan 2025 – Apr 2026</p>
               </div>
             </motion.div>
 
@@ -90,7 +90,7 @@ export default function About() {
             <div className="space-y-4 text-gray-500 dark:text-gray-300 leading-relaxed text-base">
               <p>
                 I am a B.Tech Computer Science Engineering graduate specializing in Artificial Intelligence and Machine Learning from <span className="font-semibold text-gray-900 dark:text-white">SRM Institute of Science and Technology (2022–2026)</span>. 
-                Currently, I am working as a <span className="font-semibold text-indigo-500">DevOps Intern at CaratLane</span> (a Tanishq Partnership).
+                Recently, I worked as a <span className="font-semibold text-indigo-500">DevOps Intern at CaratLane</span> (a Tanishq Partnership) till April 2026.
               </p>
               <p>
                 My objective is to bridge the gap between heavy ML/LLM scripting and production infrastructure. Through my experience, I've gained a production-level exposure to Docker containerization, AWS, CI/CD pipelines, and infrastructure management. This allows me to build and deploy intelligent model pipelines with a deployment and monitoring mindset.

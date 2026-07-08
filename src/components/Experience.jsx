@@ -6,7 +6,7 @@ const experiences = [
   {
     role: 'DevOps Intern',
     company: 'CaratLane — A Tanishq Partnership',
-    period: 'Jan 2025 – Present',
+    period: 'Jan 2025 – Apr 2026',
     bullets: [
       'Designed and deployed a proof-of-concept for AWS Client VPN, enabling secure remote access to internal infrastructure and reducing dependency on on-premise VPN solutions.',
       'Developed a User Access Review (UAR) tool to automate and streamline periodic access audits across internal systems — reducing manual review effort and improving compliance coverage.',
