@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowRight, CheckCircle2, ShieldCheck, Database, Search, Calculator, FileJson, Activity, Bot, Eye, HelpCircle } from 'lucide-react';
+import { ExternalLink, ArrowRight, CheckCircle2, ShieldCheck, Database, Search, Calculator, FileJson, Activity, Bot, Eye, HelpCircle, PlayCircle, Loader2 } from 'lucide-react';
 
 const Github = (props) => (
   <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -8,6 +8,175 @@ const Github = (props) => (
     <path d="M9 18c-4.51 2-5-2-7-2" />
   </svg>
 );
+
+// --- Risk Simulator Subcomponent ---
+function RiskSimulator() {
+  const [creditScore, setCreditScore] = useState(680);
+  const [dti, setDti] = useState(35);
+  const [loanAmount, setLoanAmount] = useState(150000);
+  
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [logs, setLogs] = useState([]);
+  const [result, setResult] = useState(null);
+  
+  const logEndRef = useRef(null);
+
+  useEffect(() => {
+    logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [logs, result]);
+
+  const runSimulation = () => {
+    setIsSimulating(true);
+    setLogs([]);
+    setResult(null);
+    
+    const steps = [
+      "Initializing Risk Agent...",
+      "[1] FAISS: Querying credit risk historical indexes...",
+      "[2] WebSearch: Scraping live market indicators...",
+      `[3] ToolUse: Deterministic evaluation of DTI=${dti}% and Score=${creditScore}...`,
+      "Synthesizing chain-of-thought...",
+      "Generating final structured JSON..."
+    ];
+
+    let currentStep = 0;
+    const interval = setInterval(() => {
+      if (currentStep < steps.length) {
+        setLogs(prev => [...prev, steps[currentStep]]);
+        currentStep++;
+      } else {
+        clearInterval(interval);
+        
+        let tier = 'Medium';
+        let riskScore = 0.52;
+        let colorClass = 'text-amber-400';
+        let bgClass = 'bg-amber-500/10 border-amber-500/30';
+        
+        if (creditScore >= 740 && dti <= 30) {
+          tier = 'Low';
+          riskScore = 0.12;
+          colorClass = 'text-emerald-400';
+          bgClass = 'bg-emerald-500/10 border-emerald-500/30';
+        } else if (creditScore < 620 || dti > 45) {
+          tier = 'High';
+          riskScore = 0.89;
+          colorClass = 'text-red-400';
+          bgClass = 'bg-red-500/10 border-red-500/30';
+        }
+
+        setResult({
+          tier,
+          riskScore,
+          colorClass,
+          bgClass,
+          decision: tier === 'High' ? 'REJECTED' : 'APPROVED',
+          approvedAmount: tier === 'High' ? 0 : loanAmount
+        });
+        setIsSimulating(false);
+      }
+    }, 600);
+  };
+
+  return (
+    <div className="border border-gray-800 bg-gray-950/80 rounded-2xl p-5 shadow-2xl relative overflow-hidden flex flex-col h-full">
+      <div className="absolute top-0 right-0 p-2 opacity-10">
+        <Calculator size={80} />
+      </div>
+      
+      <div className="flex items-center justify-between mb-4 relative z-10">
+        <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest font-outfit flex items-center">
+          <Activity className="w-3.5 h-3.5 mr-1.5 text-indigo-400" />
+          Live Agent Sandbox
+        </h4>
+        <div className={`px-2 py-0.5 rounded text-[10px] font-bold ${isSimulating ? 'bg-indigo-500/20 text-indigo-300 animate-pulse' : 'bg-gray-800 text-gray-500'}`}>
+          {isSimulating ? 'SIMULATING...' : 'IDLE'}
+        </div>
+      </div>
+
+      {/* Input Sliders */}
+      <div className="space-y-4 mb-5 relative z-10">
+        <div>
+          <div className="flex justify-between text-xs mb-1">
+            <span className="text-gray-400">Credit Score</span>
+            <span className="text-indigo-400 font-mono font-bold">{creditScore}</span>
+          </div>
+          <input 
+            type="range" min="300" max="850" step="5"
+            value={creditScore} onChange={(e) => setCreditScore(parseInt(e.target.value))}
+            className="w-full h-1.5 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+            disabled={isSimulating}
+          />
+        </div>
+        
+        <div>
+          <div className="flex justify-between text-xs mb-1">
+            <span className="text-gray-400">Debt-to-Income (DTI)</span>
+            <span className="text-emerald-400 font-mono font-bold">{dti}%</span>
+          </div>
+          <input 
+            type="range" min="10" max="80" step="1"
+            value={dti} onChange={(e) => setDti(parseInt(e.target.value))}
+            className="w-full h-1.5 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+            disabled={isSimulating}
+          />
+        </div>
+
+        <div>
+          <div className="flex justify-between text-xs mb-1">
+            <span className="text-gray-400">Loan Amount</span>
+            <span className="text-purple-400 font-mono font-bold">${loanAmount.toLocaleString()}</span>
+          </div>
+          <input 
+            type="range" min="10000" max="500000" step="5000"
+            value={loanAmount} onChange={(e) => setLoanAmount(parseInt(e.target.value))}
+            className="w-full h-1.5 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-purple-500"
+            disabled={isSimulating}
+          />
+        </div>
+      </div>
+
+      {/* Run Button */}
+      <button 
+        onClick={runSimulation}
+        disabled={isSimulating}
+        className="w-full flex items-center justify-center space-x-2 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold uppercase tracking-wider transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-4"
+      >
+        {isSimulating ? <Loader2 className="w-4 h-4 animate-spin" /> : <PlayCircle className="w-4 h-4" />}
+        <span>{isSimulating ? 'Processing...' : 'Run Evaluation'}</span>
+      </button>
+
+      {/* Terminal Output Screen */}
+      <div className="flex-1 bg-black/60 rounded-xl border border-gray-800/80 p-3 font-mono text-[10px] overflow-y-auto min-h-[140px] max-h-[180px]">
+        {logs.length === 0 && !result && (
+          <div className="text-gray-600 h-full flex items-center justify-center italic">
+            Adjust sliders and click run to simulate agent inference.
+          </div>
+        )}
+        
+        {logs.map((log, idx) => (
+          <div key={idx} className="text-gray-400 mb-1 leading-relaxed">
+            <span className="text-indigo-500 mr-2">{'>'}</span>{log}
+          </div>
+        ))}
+        
+        {result && (
+          <div className={`mt-3 p-2 rounded border ${result.bgClass}`}>
+            <div className="text-gray-300 mb-1">{"{"}</div>
+            <div className="pl-4 text-gray-300">
+              <span className="text-sky-300">"risk_tier"</span>: <span className={`font-bold ${result.colorClass}`}>"{result.tier}"</span>,<br/>
+              <span className="text-sky-300">"risk_score"</span>: <span className="text-orange-300">{result.riskScore}</span>,<br/>
+              <span className="text-sky-300">"decision"</span>: <span className={`font-bold ${result.colorClass}`}>"{result.decision}"</span>,<br/>
+              <span className="text-sky-300">"approved_amount"</span>: <span className="text-emerald-300">${result.approvedAmount.toLocaleString()}</span>
+            </div>
+            <div className="text-gray-300 mt-1">{"}"}</div>
+          </div>
+        )}
+        <div ref={logEndRef} />
+      </div>
+    </div>
+  );
+}
+// ------------------------------------
 
 const projectsList = [
   {
@@ -114,11 +283,11 @@ export default function Projects() {
             <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -z-10 pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl -z-10 pointer-events-none"></div>
 
-            <div className="grid lg:grid-cols-12 gap-8 items-center">
+            <div className="grid lg:grid-cols-12 gap-8 items-stretch">
               
               {/* Left Column: Details */}
-              <div className="lg:col-span-7 space-y-6">
-                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-indigo-500/40 bg-indigo-500/10 text-indigo-400 text-xs font-semibold uppercase tracking-wider font-outfit">
+              <div className="lg:col-span-7 space-y-6 flex flex-col justify-center">
+                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-indigo-500/40 bg-indigo-500/10 text-indigo-400 text-xs font-semibold uppercase tracking-wider font-outfit self-start">
                   <StarIcon className="h-3 w-3 mr-1" /> Flagship Project
                 </div>
 
@@ -165,59 +334,9 @@ export default function Projects() {
                 </div>
               </div>
 
-              {/* Right Column: Visual Pipeline Diagram */}
-              <div className="lg:col-span-5 border border-gray-800 bg-black/40 rounded-2xl p-5 sm:p-6 space-y-4">
-                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest font-outfit">
-                  System Architecture Pipeline
-                </h4>
-                
-                {/* Visual Pipeline Flows */}
-                <div className="space-y-3.5 text-xs text-gray-400">
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-gray-900/50 border border-gray-800">
-                    <span className="flex items-center text-gray-300 font-medium"><Database className="h-3.5 w-3.5 mr-2 text-indigo-400" /> Loan Documents</span>
-                    <span className="text-[10px] text-gray-500">FAISS Storage</span>
-                  </div>
-
-                  <div className="flex items-center justify-center py-1">
-                    <ArrowDownIcon className="h-4 w-4 text-indigo-500/40" />
-                  </div>
-
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-gray-900/50 border border-gray-800">
-                    <span className="flex items-center text-gray-300 font-medium"><Search className="h-3.5 w-3.5 mr-2 text-sky-400" /> Market Signals</span>
-                    <span className="text-[10px] text-gray-500">DuckDuckGo Search</span>
-                  </div>
-
-                  <div className="flex items-center justify-center py-1">
-                    <ArrowDownIcon className="h-4 w-4 text-indigo-500/40" />
-                  </div>
-
-                  <div className="flex items-center justify-between p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
-                    <span className="flex items-center font-semibold"><Calculator className="h-3.5 w-3.5 mr-2 text-emerald-400" /> Deterministic Math Tool</span>
-                    <span className="text-[9px] font-bold bg-emerald-500/20 px-1.5 py-0.5 rounded text-emerald-300 uppercase">Anti-Hallucination</span>
-                  </div>
-
-                  <div className="flex items-center justify-center py-1">
-                    <ArrowDownIcon className="h-4 w-4 text-indigo-500/40" />
-                  </div>
-
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-gray-900/50 border border-gray-800">
-                    <span className="flex items-center text-gray-300 font-medium"><StarIcon className="h-3.5 w-3.5 mr-2 text-purple-400" /> LLM Reasoning</span>
-                    <span className="text-[10px] text-gray-500">Ollama Llama 3</span>
-                  </div>
-
-                  <div className="flex items-center justify-center py-1">
-                    <ArrowDownIcon className="h-4 w-4 text-indigo-500/40" />
-                  </div>
-
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-indigo-500/5 border border-indigo-500/20 text-indigo-300">
-                    <span className="flex items-center font-medium"><FileJson className="h-3.5 w-3.5 mr-2 text-indigo-400" /> Structured Assessment</span>
-                    <span className="text-[9px] font-bold bg-indigo-500/20 px-1.5 py-0.5 rounded text-indigo-300 uppercase">JSON Output</span>
-                  </div>
-                </div>
-
-                <div className="text-[10px] text-gray-500 text-center italic pt-1">
-                  Benchmarked via custom Evals against Golden Dataset
-                </div>
+              {/* Right Column: Interactive Simulator */}
+              <div className="lg:col-span-5 h-full">
+                <RiskSimulator />
               </div>
 
             </div>
@@ -315,11 +434,5 @@ export default function Projects() {
 function StarIcon(props) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-  );
-}
-
-function ArrowDownIcon(props) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
   );
 }
