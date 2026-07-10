@@ -33,19 +33,43 @@ export default function Contact() {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate API request
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitSuccess(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
+    const submissionData = {
+      access_key: "3d94e995-e06d-4385-aca0-56b464c74aa9",
+      ...formData
+    };
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(submissionData)
+      });
+      const result = await response.json();
       
-      // Auto close success alert after 5s
-      setTimeout(() => setSubmitSuccess(false), 5000);
-    }, 1500);
+      if (result.success) {
+        setIsSubmitting(false);
+        setSubmitSuccess(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        
+        // Auto close success alert after 5s
+        setTimeout(() => setSubmitSuccess(false), 5000);
+      } else {
+        console.error("Error submitting form:", result);
+        setIsSubmitting(false);
+        alert("Something went wrong! Please try again later.");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setIsSubmitting(false);
+      alert("Something went wrong! Please try again later.");
+    }
   };
 
   return (
