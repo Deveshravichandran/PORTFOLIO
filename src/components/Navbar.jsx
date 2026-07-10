@@ -12,6 +12,19 @@ const navItems = [
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const toggleAudio = () => {
+    const audioEl = document.getElementById('bg-audio');
+    if (!audioEl) return;
+    
+    if (isPlaying) {
+      audioEl.pause();
+    } else {
+      audioEl.play().catch(e => console.log('Audio play failed:', e));
+    }
+    setIsPlaying(!isPlaying);
+  };
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-black border-b border-white/10">
@@ -24,6 +37,13 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
+            <button
+              onClick={toggleAudio}
+              className={`text-[10px] font-bold uppercase tracking-widest transition-colors ${isPlaying ? 'text-white' : 'text-zinc-500 hover:text-white'}`}
+            >
+              [ AUDIO: {isPlaying ? 'ON' : 'OFF'} ]
+            </button>
+            <audio id="bg-audio" src="/audio.mp3" loop preload="none"></audio>
             {navItems.map((item) => (
               <a
                 key={item.name}
@@ -36,7 +56,13 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Toggle Button */}
-          <div className="flex items-center md:hidden">
+          <div className="flex items-center md:hidden space-x-4">
+            <button
+              onClick={toggleAudio}
+              className={`text-[10px] font-bold uppercase tracking-widest transition-colors ${isPlaying ? 'text-white' : 'text-zinc-500 hover:text-white'}`}
+            >
+              [ {isPlaying ? 'ON' : 'OFF'} ]
+            </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="text-zinc-400 hover:text-white transition-colors text-xs font-bold uppercase tracking-widest"

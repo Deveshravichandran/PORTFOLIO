@@ -19,6 +19,11 @@ export default function Hero() {
             <br />
             <span className="text-zinc-500">Ravichandran</span>
           </h1>
+          <div className="inline-block mt-4 border border-zinc-800 px-3 py-1.5 bg-black">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
+              Audio // Currently Spinning: <span className="text-white">"No Church in the Wild" — Kanye West & JAY-Z</span>
+            </p>
+          </div>
         </motion.div>
 
         {/* Divider Line */}

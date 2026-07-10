@@ -192,6 +192,16 @@ function PdfChatSimulator() {
 
     setTimeout(() => {
       setIsThinking(false);
+
+      if (userMsg.toLowerCase().includes('kanye')) {
+        setMessages(prev => [
+          ...prev,
+          { role: 'system', text: 'EASTER EGG DETECTED.' },
+          { role: 'assistant', text: "TOP 3 ALBUMS: \n1. My Beautiful Dark Twisted Fantasy\n2. Yeezus\n3. The College Dropout" }
+        ]);
+        return;
+      }
+
       setMessages(prev => [
         ...prev,
         { role: 'system', text: 'FAISS TOP-K=3 RETRIEVED.' },
