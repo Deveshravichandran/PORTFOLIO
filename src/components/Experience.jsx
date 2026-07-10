@@ -30,19 +30,17 @@ const experiences = [
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-20 relative overflow-hidden bg-grid-pattern">
-      {/* Background ambient light */}
-      <div className="glow-bubble w-80 h-80 bg-indigo-500/5 top-1/2 left-0 -translate-y-1/2 -z-10"></div>
+    <section id="experience" className="py-20 relative overflow-hidden bg-black">
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="mb-16 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold font-outfit">Professional Experience</h2>
-          <p className="text-gray-400 mt-2 max-w-md mx-auto text-sm">
+          <h2 className="text-3xl sm:text-4xl font-bold font-outfit text-white">Professional Experience</h2>
+          <p className="text-zinc-400 mt-2 max-w-md mx-auto text-sm">
             Bridging AI models with DevOps infrastructure for secure, scalable systems.
           </p>
-          <div className="w-12 h-1 bg-gradient-to-r from-indigo-500 to-emerald-400 mx-auto mt-4 rounded-full"></div>
+          <div className="w-12 h-1 bg-white mx-auto mt-4 rounded-full"></div>
         </div>
 
         {/* Timeline Container */}
@@ -57,50 +55,46 @@ export default function Experience() {
               className="relative pl-6 sm:pl-10 group"
             >
               {/* Timeline dot */}
-              <div className="absolute -left-[9px] top-1.5 h-4 w-4 rounded-full border-2 border-indigo-500 bg-darkBg group-hover:bg-indigo-500 transition-colors duration-300"></div>
+              <div className="absolute -left-[9px] top-1.5 h-4 w-4 rounded-full border-2 border-zinc-700 bg-black group-hover:bg-white transition-colors duration-300"></div>
 
               {/* Card Container */}
-              <div className="p-6 rounded-2xl border border-gray-200 dark:border-gray-800/60 bg-white/50 dark:bg-darkBg-card/40 glassmorphism hover:border-indigo-500/30 transition-all duration-300">
+              <div className="minimal-card p-6 hover:border-white/20 transition-all duration-300">
                 
                 {/* Meta details */}
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-gray-200 dark:border-gray-800/50 pb-4 mb-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-white/5 pb-4 mb-4">
                   <div>
-                    <h3 className="text-xl font-bold text-white font-outfit group-hover:text-indigo-400 transition-colors">
+                    <h3 className="text-xl font-bold text-white font-outfit transition-colors">
                       {exp.role}
                     </h3>
-                    <p className="text-sm font-semibold text-indigo-500 mt-0.5">
+                    <p className="text-sm font-semibold text-zinc-400 mt-0.5">
                       {exp.company}
                     </p>
                   </div>
-                  <span className="inline-flex items-center text-xs font-semibold text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-gray-850 px-3 py-1 rounded-full border border-gray-200 dark:border-gray-800">
+                  <span className="inline-flex items-center text-xs font-semibold text-zinc-400 bg-white/5 px-3 py-1 rounded-full border border-white/5">
                     <Calendar className="h-3.5 w-3.5 mr-1" /> {exp.period}
                   </span>
                 </div>
 
                 {/* Bullets */}
-                <ul className="space-y-3 mb-6 text-sm text-gray-500 dark:text-gray-400">
+                <ul className="space-y-3 mb-6 text-sm text-zinc-400">
                   {exp.bullets.map((bullet, bIdx) => (
                     <li key={bIdx} className="flex items-start">
-                      <ChevronRight className="h-4 w-4 mr-2 text-indigo-500 mt-0.5 flex-shrink-0" />
+                      <ChevronRight className="h-4 w-4 mr-2 text-zinc-500 mt-0.5 flex-shrink-0" />
                       <span>{bullet}</span>
                     </li>
                   ))}
                 </ul>
 
                 {/* Highlights badges */}
-                <div className="flex flex-wrap gap-1.5 border-t border-gray-200 dark:border-gray-850 pt-4">
+                <div className="flex flex-wrap gap-1.5 border-t border-white/5 pt-4">
                   {exp.highlights.map((high, hIdx) => {
                     const isMetric = high.includes('%') || high.includes('Speedup') || high.includes('Accuracy');
                     return (
                       <span
                         key={hIdx}
-                        className={`inline-flex items-center text-[10px] sm:text-xs font-bold px-2.5 py-1 rounded-md border ${
-                          isMetric
-                            ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                            : 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
-                        }`}
+                        className="inline-flex items-center text-[10px] sm:text-xs font-bold px-2.5 py-1 rounded-md border bg-white/5 text-zinc-300 border-white/10"
                       >
-                        {isMetric && <Zap className="h-3 w-3 mr-1 animate-pulse" />}
+                        {isMetric && <Zap className="h-3 w-3 mr-1 opacity-50" />}
                         {high}
                       </span>
                     );

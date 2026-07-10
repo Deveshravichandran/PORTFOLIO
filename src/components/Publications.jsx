@@ -99,16 +99,16 @@ function GradCamVisualizer() {
 
 export default function Publications() {
   return (
-    <section id="publications" className="py-20 bg-gray-950/20 dark:bg-darkBg/10 border-y border-gray-200 dark:border-gray-800/40">
+    <section id="publications" className="py-20 bg-black border-y border-white/5">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="mb-12 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold font-outfit">Publications & Research</h2>
-          <p className="text-gray-400 mt-2 max-w-xl mx-auto text-sm">
+          <h2 className="text-3xl sm:text-4xl font-bold font-outfit text-white">Publications & Research</h2>
+          <p className="text-zinc-400 mt-2 max-w-xl mx-auto text-sm">
             Academic papers and explainable deep learning research focused on transformer efficiency and neural network interpretability.
           </p>
-          <div className="w-12 h-1 bg-gradient-to-r from-indigo-500 to-emerald-400 mx-auto mt-4 rounded-full"></div>
+          <div className="w-12 h-1 bg-white mx-auto mt-4 rounded-full"></div>
         </div>
 
         {/* Publications List */}
@@ -120,13 +120,13 @@ export default function Publications() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: idx * 0.15 }}
               viewport={{ once: true }}
-              className="p-6 sm:p-8 rounded-2xl border border-gray-200 dark:border-gray-800/60 bg-white/50 dark:bg-darkBg-card/40 glassmorphism hover:border-indigo-500/30 transition-all duration-300"
+              className="minimal-card p-6 sm:p-8 hover:border-white/20 transition-all duration-300"
             >
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                 <div className="space-y-3 flex-1 w-full">
                   
                   {/* Type Badge */}
-                  <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-full">
+                  <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-zinc-300 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full">
                     <FileText className="h-3 w-3 mr-1" /> {pub.type}
                   </span>
 
@@ -136,13 +136,13 @@ export default function Publications() {
                   </h3>
 
                   {/* Authors */}
-                  <div className="flex items-center text-xs text-gray-400 gap-1.5">
-                    <Users className="h-3.5 w-3.5 text-gray-500" />
-                    <span><span className="text-gray-500">Authors:</span> {pub.authors}</span>
+                  <div className="flex items-center text-xs text-zinc-400 gap-1.5">
+                    <Users className="h-3.5 w-3.5 text-zinc-500" />
+                    <span><span className="text-zinc-500">Authors:</span> {pub.authors}</span>
                   </div>
 
                   {/* Description */}
-                  <p className="text-sm text-gray-400 leading-relaxed pt-1">
+                  <p className="text-sm text-zinc-400 leading-relaxed pt-1">
                     {pub.description}
                   </p>
 
@@ -156,7 +156,7 @@ export default function Publications() {
                     {pub.tags.map(tag => (
                       <span
                         key={tag}
-                        className="px-2.5 py-0.5 text-[10px] rounded-md font-medium border border-gray-700 bg-gray-900/40 text-gray-400"
+                        className="px-2.5 py-0.5 text-[10px] rounded-md font-medium border border-white/5 bg-white/5 text-zinc-400"
                       >
                         {tag}
                       </span>
@@ -166,7 +166,7 @@ export default function Publications() {
                 </div>
 
                 {/* Right Book Icon Accent */}
-                <div className="hidden sm:block p-3 bg-gray-950/30 dark:bg-darkBg/40 border border-gray-800 rounded-xl text-gray-400 self-start flex-shrink-0">
+                <div className="hidden sm:block p-3 bg-white/5 border border-white/10 rounded-xl text-zinc-400 self-start flex-shrink-0">
                   <BookOpen className="h-5 w-5" />
                 </div>
               </div>

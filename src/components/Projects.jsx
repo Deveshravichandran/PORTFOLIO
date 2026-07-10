@@ -394,16 +394,16 @@ const projectsList = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-20 bg-grid-pattern relative">
+    <section id="projects" className="py-20 bg-black relative border-y border-white/5">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="mb-16 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold font-outfit">Featured Projects</h2>
-          <p className="text-gray-400 mt-2 max-w-xl mx-auto text-sm sm:text-base">
+          <h2 className="text-3xl sm:text-4xl font-bold font-outfit text-white">Featured Projects</h2>
+          <p className="text-zinc-400 mt-2 max-w-xl mx-auto text-sm sm:text-base">
             Showcase of agentic architectures, local inference setups, and end-to-end machine learning pipelines.
           </p>
-          <div className="w-12 h-1 bg-gradient-to-r from-indigo-500 to-emerald-400 mx-auto mt-4 rounded-full"></div>
+          <div className="w-12 h-1 bg-white mx-auto mt-4 rounded-full"></div>
         </div>
 
         {/* Flagship Showcased Card */}
@@ -414,17 +414,13 @@ export default function Projects() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="mb-12 rounded-3xl p-6 sm:p-10 border border-indigo-500/30 bg-gradient-to-br from-indigo-950/20 via-darkBg-card to-emerald-950/10 shadow-[0_0_50px_rgba(99,102,241,0.1)] relative overflow-hidden"
+            className="mb-12 minimal-card p-6 sm:p-10 relative overflow-hidden"
           >
-            {/* Glowing borders */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -z-10 pointer-events-none"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl -z-10 pointer-events-none"></div>
-
             <div className="grid lg:grid-cols-12 gap-8 items-stretch">
               
               {/* Left Column: Details */}
               <div className="lg:col-span-7 space-y-6 flex flex-col justify-center">
-                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-indigo-500/40 bg-indigo-500/10 text-indigo-400 text-xs font-semibold uppercase tracking-wider font-outfit self-start">
+                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-zinc-300 text-xs font-semibold uppercase tracking-wider font-outfit self-start">
                   <StarIcon className="h-3 w-3 mr-1" /> Flagship Project
                 </div>
 
@@ -432,13 +428,13 @@ export default function Projects() {
                   {project.title}
                 </h3>
 
-                <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
+                <p className="text-zinc-400 text-base sm:text-lg leading-relaxed">
                   {project.description}
                 </p>
 
                 {/* Core Design Principle Box */}
-                <div className="flex items-start space-x-3 p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 text-emerald-400 text-sm">
-                  <ShieldCheck className="h-5 w-5 mt-0.5 flex-shrink-0 text-emerald-400" />
+                <div className="flex items-start space-x-3 p-4 rounded-xl bg-white/5 border border-white/10 text-zinc-300 text-sm">
+                  <ShieldCheck className="h-5 w-5 mt-0.5 flex-shrink-0 text-white" />
                   <p className="italic leading-relaxed">
                     {project.corePrinciple}
                   </p>
@@ -492,7 +488,7 @@ export default function Projects() {
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -5 }}
-                className="rounded-2xl p-6 border border-indigo-500/15 dark:border-indigo-500/15 bg-gradient-to-br from-indigo-950/5 via-darkBg-card to-emerald-950/5 glassmorphism hover:border-indigo-500/35 hover:shadow-[0_0_30px_rgba(99,102,241,0.08)] transition-all duration-300 flex flex-col justify-between"
+                className="minimal-card p-6 flex flex-col justify-between"
               >
                 <div className="space-y-4">
                   {/* Card Header with Icon */}
@@ -519,10 +515,10 @@ export default function Projects() {
 
                   {/* Implementation Bullets */}
                   {project.bullets && (
-                    <ul className="space-y-2 pt-2 border-t border-gray-800">
+                    <ul className="space-y-2 pt-2 border-t border-white/5">
                       {project.bullets.map((bullet, bIdx) => (
-                        <li key={bIdx} className="flex items-start text-xs text-gray-400">
-                          <CheckCircle2 className="h-3.5 w-3.5 text-indigo-500 mr-2 mt-0.5 flex-shrink-0" />
+                        <li key={bIdx} className="flex items-start text-xs text-zinc-400">
+                          <CheckCircle2 className="h-3.5 w-3.5 text-zinc-500 mr-2 mt-0.5 flex-shrink-0" />
                           <span>{bullet}</span>
                         </li>
                       ))}

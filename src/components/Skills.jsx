@@ -89,17 +89,15 @@ function TelemetryDashboard() {
   }, []);
 
   return (
-    <div className="mt-8 mb-16 rounded-2xl border border-gray-800 bg-gray-950/50 p-6 overflow-hidden relative">
-      <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
-      
+    <div className="mt-8 mb-16 minimal-card p-6 overflow-hidden relative">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-bold font-outfit text-white flex items-center">
-          <Activity className="h-5 w-5 mr-2 text-indigo-500" />
+          <Activity className="h-5 w-5 mr-2 text-white" />
           Live MLOps Telemetry
         </h3>
         <div className="flex items-center space-x-2">
-          <div className={`w-2 h-2 rounded-full ${pulse ? 'bg-emerald-400' : 'bg-emerald-600'} transition-colors duration-500`}></div>
-          <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-500">System Online</span>
+          <div className={`w-2 h-2 rounded-full ${pulse ? 'bg-white' : 'bg-zinc-500'} transition-colors duration-500`}></div>
+          <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-300">System Online</span>
         </div>
       </div>
 
@@ -134,16 +132,16 @@ export default function Skills() {
   const [activeTab, setActiveTab] = useState('ml');
 
   return (
-    <section id="skills" className="py-20 relative bg-gray-950/20 dark:bg-darkBg/10 border-t border-gray-200 dark:border-gray-800/40">
+    <section id="skills" className="py-20 relative bg-black border-t border-white/5">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="mb-16 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold font-outfit">Skills & Certifications</h2>
-          <p className="text-gray-400 mt-2 max-w-md mx-auto text-sm">
+          <h2 className="text-3xl sm:text-4xl font-bold font-outfit text-white">Skills & Certifications</h2>
+          <p className="text-zinc-400 mt-2 max-w-md mx-auto text-sm">
             My technical toolkit and verified credentials across AI, cloud computing, and DevOps.
           </p>
-          <div className="w-12 h-1 bg-gradient-to-r from-indigo-500 to-emerald-400 mx-auto mt-4 rounded-full"></div>
+          <div className="w-12 h-1 bg-white mx-auto mt-4 rounded-full"></div>
         </div>
 
         {/* Tab Controls */}
@@ -157,11 +155,11 @@ export default function Skills() {
                 onClick={() => setActiveTab(category.id)}
                 className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl border text-sm font-medium transition-all duration-200 ${
                   isActive
-                    ? 'border-indigo-500/40 bg-indigo-500/10 text-white font-semibold'
-                    : 'border-gray-200 dark:border-gray-800/60 bg-white/50 dark:bg-darkBg-card/20 text-gray-400 hover:text-gray-200 hover:border-gray-700'
+                    ? 'border-white/20 bg-white/10 text-white font-semibold'
+                    : 'border-white/5 bg-transparent text-zinc-500 hover:text-white hover:border-white/10'
                 }`}
               >
-                <Icon className={`h-4 w-4 ${category.color}`} />
+                <Icon className={`h-4 w-4 ${isActive ? 'text-white' : 'text-zinc-500'}`} />
                 <span>{category.name}</span>
               </button>
             );
@@ -186,12 +184,12 @@ export default function Skills() {
                     <motion.div
                       key={skill}
                       whileHover={{ scale: 1.02 }}
-                      className="p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white/40 dark:bg-darkBg-card/30 glassmorphism hover:border-indigo-500/30 transition-colors flex items-center space-x-3"
+                      className="p-4 rounded-xl border border-white/5 bg-zinc-950 hover:border-white/20 transition-colors flex items-center space-x-3"
                     >
-                      <div className={`p-2 rounded-lg ${category.bgColor} ${category.color} flex-shrink-0`}>
+                      <div className={`p-2 rounded-lg bg-white/5 flex-shrink-0 text-white`}>
                         <Cpu className="h-4 w-4" />
                       </div>
-                      <span className="text-sm font-medium font-outfit text-gray-800 dark:text-gray-200">
+                      <span className="text-sm font-medium font-outfit text-white">
                         {skill}
                       </span>
                     </motion.div>
@@ -206,13 +204,13 @@ export default function Skills() {
         <TelemetryDashboard />
 
         {/* Certifications Sub-Section */}
-        <div className="border-t border-gray-200 dark:border-gray-800/60 pt-16">
+        <div className="border-t border-white/5 pt-16">
           <div className="mb-10 text-center sm:text-left">
-            <h3 className="text-2xl font-bold font-outfit flex items-center justify-center sm:justify-start gap-2">
-              <Award className="h-6 w-6 text-indigo-500" />
+            <h3 className="text-2xl font-bold font-outfit flex items-center justify-center sm:justify-start gap-2 text-white">
+              <Award className="h-6 w-6 text-white" />
               <span>Professional Credentials</span>
             </h3>
-            <p className="text-sm text-gray-400 mt-1">Verified industry certifications in cloud architecture and machine learning.</p>
+            <p className="text-sm text-zinc-400 mt-1">Verified industry certifications in cloud architecture and machine learning.</p>
           </div>
 
           <div className="grid sm:grid-cols-2 gap-4">
@@ -223,16 +221,16 @@ export default function Skills() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                 viewport={{ once: true }}
-                className={`p-5 rounded-2xl border ${cert.badgeColor} flex items-start space-x-4`}
+                className={`minimal-card p-5 flex items-start space-x-4 hover:border-white/20`}
               >
-                <div className="p-2.5 bg-white/10 rounded-xl">
+                <div className="p-2.5 bg-white/10 rounded-xl text-white">
                   <Shield className="h-5 w-5" />
                 </div>
                 <div>
                   <h4 className="font-bold text-sm sm:text-base font-outfit text-white">
                     {cert.title}
                   </h4>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-zinc-400 mt-1">
                     Issued by: {cert.issuer}
                   </p>
                 </div>

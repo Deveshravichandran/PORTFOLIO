@@ -81,10 +81,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center py-16 overflow-hidden bg-grid-pattern">
-      {/* Ambient Glow Bubbles */}
-      <div className="glow-bubble w-96 h-96 bg-indigo-600 top-1/4 left-1/4 transform -translate-x-1/2 -translate-y-1/2"></div>
-      <div className="glow-bubble w-96 h-96 bg-emerald-600 bottom-1/4 right-1/4 transform translate-x-1/2 translate-y-1/2"></div>
+    <section className="relative min-h-[90vh] flex items-center justify-center py-16 overflow-hidden bg-black">
 
       <div className="relative max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 z-10">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
@@ -99,19 +96,19 @@ export default function Hero() {
             {/* Status Badge */}
             <motion.div
               variants={itemVariants}
-              className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full border border-indigo-500/30 dark:border-indigo-500/20 bg-indigo-500/10 text-indigo-400 text-xs sm:text-sm font-semibold font-outfit"
+              className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-zinc-300 text-xs sm:text-sm font-semibold font-outfit"
             >
-              <Cpu className="h-4 w-4 animate-pulse" />
+              <Cpu className="h-4 w-4" />
               <span>Open to AI/ML & Applied AI Engineer Roles</span>
             </motion.div>
 
             {/* Title */}
             <motion.h1
               variants={itemVariants}
-              className="text-4xl sm:text-6xl font-bold font-outfit tracking-tight text-gray-900 dark:text-white"
+              className="text-4xl sm:text-6xl font-bold font-outfit tracking-tight text-white"
             >
               Hi, I'm{' '}
-              <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-400 bg-clip-text text-transparent filter drop-shadow-[0_0_15px_rgba(99,102,241,0.25)]">
+              <span className="text-white">
                 Devesh Ravichandran
               </span>
             </motion.h1>
@@ -142,7 +139,7 @@ export default function Hero() {
                 href="/Devesh_Ravichandran_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center space-x-2 w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-medium shadow-lg hover:shadow-indigo-500/20 transition-all duration-200"
+                className="flex items-center justify-center space-x-2 w-full sm:w-auto px-6 py-3 rounded-xl bg-white text-black hover:bg-zinc-200 font-medium transition-all duration-200"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
               >
@@ -157,7 +154,7 @@ export default function Hero() {
                   href="https://github.com/deveshravichandran"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center space-x-2 flex-1 sm:flex-initial px-6 py-3 rounded-xl border border-gray-300 dark:border-gray-800 bg-white/30 dark:bg-black/10 hover:bg-gray-150 dark:hover:bg-gray-800/40 font-medium transition-all duration-200"
+                  className="flex items-center justify-center space-x-2 flex-1 sm:flex-initial px-6 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white font-medium transition-all duration-200"
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                 >
@@ -169,11 +166,11 @@ export default function Hero() {
                   href="https://linkedin.com/in/devesh-ravichandran-333823258"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center space-x-2 flex-1 sm:flex-initial px-6 py-3 rounded-xl border border-gray-300 dark:border-gray-800 bg-white/30 dark:bg-black/10 hover:bg-gray-150 dark:hover:bg-gray-800/40 font-medium transition-all duration-200"
+                  className="flex items-center justify-center space-x-2 flex-1 sm:flex-initial px-6 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white font-medium transition-all duration-200"
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                 >
-                  <Linkedin className="h-5 w-5 text-blue-500" />
+                  <Linkedin className="h-5 w-5" />
                   <span>LinkedIn</span>
                 </motion.a>
               </div>
@@ -187,13 +184,13 @@ export default function Hero() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <div className="border border-gray-300 dark:border-gray-800 rounded-2xl bg-gray-900/90 dark:bg-black/80 shadow-2xl overflow-hidden font-mono text-left">
+            <div className="border border-white/10 rounded-2xl bg-zinc-950 shadow-2xl overflow-hidden font-mono text-left">
               {/* Terminal Title Bar */}
-              <div className="flex items-center justify-between px-4 py-3 bg-gray-950/80 border-b border-gray-800">
+              <div className="flex items-center justify-between px-4 py-3 bg-black border-b border-white/5">
                 <div className="flex space-x-1.5">
-                  <div className="w-3 h-3 rounded-full bg-red-500/70"></div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/70"></div>
-                  <div className="w-3 h-3 rounded-full bg-green-500/70"></div>
+                  <div className="w-3 h-3 rounded-full bg-zinc-700"></div>
+                  <div className="w-3 h-3 rounded-full bg-zinc-700"></div>
+                  <div className="w-3 h-3 rounded-full bg-zinc-700"></div>
                 </div>
                 <div className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">
                   devesh_agent_session
@@ -237,14 +234,14 @@ export default function Hero() {
               </form>
 
               {/* Interactive Quick-Action Tags */}
-              <div className="px-4 pb-4 pt-2 bg-gray-950/20 flex flex-wrap gap-1.5 items-center">
-                <span className="text-[10px] text-gray-500 font-bold uppercase mr-1">Quick Run:</span>
+              <div className="px-4 pb-4 pt-2 bg-black flex flex-wrap gap-1.5 items-center">
+                <span className="text-[10px] text-zinc-500 font-bold uppercase mr-1">Quick Run:</span>
                 {['about', 'skills', 'projects', 'clear'].map((cmd) => (
                   <button
                     key={cmd}
                     type="button"
                     onClick={() => executeCommand(cmd)}
-                    className="px-2 py-0.5 rounded text-[10px] bg-indigo-500/10 hover:bg-indigo-500/25 border border-indigo-500/20 text-indigo-400 hover:text-white transition-all font-semibold font-mono"
+                    className="px-2 py-0.5 rounded text-[10px] bg-zinc-900 hover:bg-zinc-800 border border-white/5 text-zinc-400 hover:text-white transition-all font-semibold font-mono"
                   >
                     {cmd}
                   </button>
