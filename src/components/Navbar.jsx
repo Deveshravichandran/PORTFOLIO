@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
 
 const navItems = [
   { name: 'About', href: '#about' },
@@ -15,26 +14,21 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-black/80 backdrop-blur-md border-b border-white/10 transition-all duration-300">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="sticky top-0 z-50 w-full bg-black border-b border-white/10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo Section */}
-          <motion.a
-            href="#"
-            className="flex items-center text-xl font-bold font-outfit text-white tracking-tight"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
+          <a href="#" className="text-xl font-bold font-outfit text-white tracking-tighter uppercase">
             Devesh.R
-          </motion.a>
+          </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                className="text-sm font-medium text-zinc-400 transition-colors hover:text-white duration-200"
+                className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-white transition-colors"
               >
                 {item.name}
               </a>
@@ -45,10 +39,10 @@ export default function Navbar() {
           <div className="flex items-center md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-full text-zinc-400 hover:text-white transition-colors"
+              className="text-zinc-400 hover:text-white transition-colors text-xs font-bold uppercase tracking-widest"
               aria-label="Toggle Menu"
             >
-              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {mobileMenuOpen ? 'Close' : 'Menu'}
             </button>
           </div>
         </div>
@@ -63,13 +57,13 @@ export default function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden border-t border-white/10 bg-black"
           >
-            <div className="px-4 pt-2 pb-6 space-y-2">
+            <div className="px-4 py-6 space-y-4">
               {navItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2.5 rounded-lg text-base font-medium text-zinc-400 transition-colors hover:bg-zinc-900 hover:text-white"
+                  className="block text-sm font-bold uppercase tracking-widest text-zinc-400 hover:text-white transition-colors"
                 >
                   {item.name}
                 </a>

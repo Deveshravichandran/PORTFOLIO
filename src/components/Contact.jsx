@@ -1,41 +1,17 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Phone, Send, CheckCircle2 } from 'lucide-react';
-
-const Github = (props) => (
-  <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-    <path d="M9 18c-4.51 2-5-2-7-2" />
-  </svg>
-);
-
-const Linkedin = (props) => (
-  <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect x="2" y="9" width="4" height="12" />
-    <circle cx="4" cy="4" r="2" />
-  </svg>
-);
-
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
-
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrorMsg('');
 
     const submissionData = {
       access_key: "3d94e995-e06d-4385-aca0-56b464c74aa9",
@@ -52,200 +28,114 @@ export default function Contact() {
         body: JSON.stringify(submissionData)
       });
       const result = await response.json();
-      
       if (result.success) {
-        setIsSubmitting(false);
         setSubmitSuccess(true);
         setFormData({ name: '', email: '', subject: '', message: '' });
-        
-        // Auto close success alert after 5s
         setTimeout(() => setSubmitSuccess(false), 5000);
       } else {
-        console.error("Error submitting form:", result);
-        setIsSubmitting(false);
-        alert("Something went wrong! Please try again later.");
+        setErrorMsg(result.message || "Something went wrong.");
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      setErrorMsg("Failed to send message. Please check your connection.");
+    } finally {
       setIsSubmitting(false);
-      alert("Something went wrong! Please try again later.");
     }
   };
 
   return (
-    <section id="contact" className="py-20 relative bg-black">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-24 bg-black border-b border-white/10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
-        <div className="mb-16 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold font-outfit text-white">Get In Touch</h2>
-          <p className="text-zinc-400 mt-2 max-w-sm mx-auto text-sm">
-            Let's discuss full-time roles, collaborative projects, or general AI/ML architectures.
-          </p>
-          <div className="w-12 h-1 bg-white mx-auto mt-4 rounded-full"></div>
-        </div>
-
-        <div className="grid md:grid-cols-12 gap-8 items-start">
-          {/* Left Column: Direct Contacts */}
-          <div className="md:col-span-5 space-y-4">
-            <h3 className="text-xl font-bold font-outfit text-white mb-6">Contact Channels</h3>
-            
-            {/* Email */}
-            <a
-              href="mailto:deveshravichandran@gmail.com"
-              className="minimal-card flex items-center space-x-4 p-4 hover:border-white/20 transition-colors"
-            >
-              <div className="p-3 bg-white/5 rounded-xl text-white">
-                <Mail className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">Email</p>
-                <p className="text-sm font-semibold text-white break-all">deveshravichandran@gmail.com</p>
-              </div>
-            </a>
-
-            {/* Phone */}
-            <a
-              href="tel:+917200074322"
-              className="minimal-card flex items-center space-x-4 p-4 hover:border-white/20 transition-colors"
-            >
-              <div className="p-3 bg-white/5 rounded-xl text-white">
-                <Phone className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">Phone</p>
-                <p className="text-sm font-semibold text-white">+91 72000 74322</p>
-              </div>
-            </a>
-
-            {/* LinkedIn */}
-            <a
-              href="https://linkedin.com/in/devesh-ravichandran-333823258"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="minimal-card flex items-center space-x-4 p-4 hover:border-white/20 transition-colors"
-            >
-              <div className="p-3 bg-white/5 rounded-xl text-white">
-                <Linkedin className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">LinkedIn</p>
-                <p className="text-sm font-semibold text-white">devesh-ravichandran-333823258</p>
-              </div>
-            </a>
-
-            {/* GitHub */}
-            <a
-              href="https://github.com/deveshravichandran"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="minimal-card flex items-center space-x-4 p-4 hover:border-white/20 transition-colors"
-            >
-              <div className="p-3 bg-white/5 rounded-xl text-white">
-                <Github className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">GitHub</p>
-                <p className="text-sm font-semibold text-white">deveshravichandran</p>
-              </div>
-            </a>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+          
+          <div className="md:col-span-1">
+            <h2 className="text-4xl sm:text-5xl font-bold font-outfit text-white uppercase tracking-tighter sticky top-24">
+              Contact
+            </h2>
           </div>
 
-          {/* Right Column: Contact Form */}
-          <div className="md:col-span-7">
-            <div className="minimal-card p-6 sm:p-8 shadow-lg">
-              <h3 className="text-xl font-bold font-outfit text-white mb-6">Send Message</h3>
+          <div className="md:col-span-3">
+            <div className="grid lg:grid-cols-2 gap-12 border-t border-white/10 pt-12">
+              
+              {/* Contact Info */}
+              <div className="space-y-8">
+                <div>
+                  <h3 className="text-xl font-bold text-white uppercase mb-2">Get In Touch</h3>
+                  <p className="text-sm text-zinc-400 max-w-sm">
+                    Let's discuss full-time roles, collaborative projects, or general AI/ML architectures.
+                  </p>
+                </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label htmlFor="name" className="text-xs font-semibold text-gray-400">Your Name</label>
-                    <input
-                      type="text"
-                      id="name"
-                      required
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="John Doe"
-                      className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-800 bg-white dark:bg-black/30 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-indigo-500 focus:outline-none text-sm transition-all"
-                    />
+                <div className="space-y-4">
+                  <a href="mailto:deveshravichandran@gmail.com" className="block border border-white/20 p-4 hover:border-white transition-colors group">
+                    <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold mb-1 group-hover:text-white transition-colors">Email</p>
+                    <p className="text-sm font-bold text-white uppercase break-all">deveshravichandran@gmail.com</p>
+                  </a>
+                  
+                  <a href="tel:+917200074322" className="block border border-white/20 p-4 hover:border-white transition-colors group">
+                    <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold mb-1 group-hover:text-white transition-colors">Phone</p>
+                    <p className="text-sm font-bold text-white uppercase">+91 72000 74322</p>
+                  </a>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <a href="https://linkedin.com/in/devesh-ravichandran-333823258" target="_blank" rel="noopener noreferrer" className="block border border-white/20 p-4 hover:border-white transition-colors group text-center">
+                      <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold mb-1 group-hover:text-white transition-colors">LinkedIn</p>
+                      <p className="text-sm font-bold text-white uppercase">Profile</p>
+                    </a>
+                    
+                    <a href="https://github.com/deveshravichandran" target="_blank" rel="noopener noreferrer" className="block border border-white/20 p-4 hover:border-white transition-colors group text-center">
+                      <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold mb-1 group-hover:text-white transition-colors">GitHub</p>
+                      <p className="text-sm font-bold text-white uppercase">Profile</p>
+                    </a>
                   </div>
-
-                  <div className="space-y-1.5">
-                    <label htmlFor="email" className="text-xs font-semibold text-gray-400">Your Email</label>
-                    <input
-                      type="email"
-                      id="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="john@example.com"
-                      className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-800 bg-white dark:bg-black/30 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-indigo-500 focus:outline-none text-sm transition-all"
-                    />
-                  </div>
                 </div>
+              </div>
 
-                <div className="space-y-1.5">
-                  <label htmlFor="subject" className="text-xs font-semibold text-gray-400">Subject</label>
-                  <input
-                    type="text"
-                    id="subject"
-                    required
-                    value={formData.subject}
-                    onChange={handleChange}
-                    placeholder="AI/ML Engineer role opportunities"
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-800 bg-white dark:bg-black/30 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-indigo-500 focus:outline-none text-sm transition-all"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label htmlFor="message" className="text-xs font-semibold text-gray-400">Message</label>
-                  <textarea
-                    id="message"
-                    required
-                    rows="4"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Write your message here..."
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-800 bg-white dark:bg-black/30 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-indigo-500 focus:outline-none text-sm transition-all resize-none"
-                  ></textarea>
-                </div>
-
-                {/* Submit button */}
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full sm:w-auto flex items-center justify-center space-x-2 px-6 py-3 rounded-xl bg-white hover:bg-zinc-200 text-black font-medium transition-all duration-200 disabled:opacity-50"
-                >
-                  {isSubmitting ? (
-                    <span>Sending...</span>
-                  ) : (
-                    <>
-                      <Send className="h-4 w-4 mr-1" />
-                      <span>Send Message</span>
-                    </>
-                  )}
-                </button>
-
-                {/* Success Feedback Alert */}
-                <AnimatePresence>
+              {/* Form */}
+              <div>
+                <form onSubmit={handleSubmit} className="space-y-6">
                   {submitSuccess && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      className="mt-4 flex items-center space-x-2 p-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-sm font-semibold"
-                    >
-                      <CheckCircle2 className="h-5 w-5 flex-shrink-0" />
-                      <span>Thank you! Your message was sent successfully.</span>
-                    </motion.div>
+                    <div className="bg-white text-black p-4 text-xs font-bold uppercase tracking-widest text-center">
+                      Message Sent Successfully.
+                    </div>
                   )}
-                </AnimatePresence>
-              </form>
+                  {errorMsg && (
+                    <div className="bg-zinc-900 border border-red-500 text-red-500 p-4 text-xs font-bold uppercase tracking-widest text-center">
+                      {errorMsg}
+                    </div>
+                  )}
+
+                  <div className="space-y-4">
+                    <div>
+                      <label htmlFor="name" className="block text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Full Name</label>
+                      <input type="text" id="name" name="name" required value={formData.name} onChange={handleChange} className="w-full bg-black border border-white/20 p-3 text-sm text-white focus:outline-none focus:border-white transition-colors" />
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="email" className="block text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Email Address</label>
+                      <input type="email" id="email" name="email" required value={formData.email} onChange={handleChange} className="w-full bg-black border border-white/20 p-3 text-sm text-white focus:outline-none focus:border-white transition-colors" />
+                    </div>
+
+                    <div>
+                      <label htmlFor="subject" className="block text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Subject</label>
+                      <input type="text" id="subject" name="subject" required value={formData.subject} onChange={handleChange} className="w-full bg-black border border-white/20 p-3 text-sm text-white focus:outline-none focus:border-white transition-colors" />
+                    </div>
+
+                    <div>
+                      <label htmlFor="message" className="block text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Message</label>
+                      <textarea id="message" name="message" required rows="4" value={formData.message} onChange={handleChange} className="w-full bg-black border border-white/20 p-3 text-sm text-white focus:outline-none focus:border-white transition-colors resize-none"></textarea>
+                    </div>
+                  </div>
+
+                  <button type="submit" disabled={isSubmitting} className="w-full border border-white text-white font-bold uppercase tracking-widest text-xs py-4 hover:bg-white hover:text-black transition-colors disabled:opacity-50">
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                  </button>
+                </form>
+              </div>
+
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );

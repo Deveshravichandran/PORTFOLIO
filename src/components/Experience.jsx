@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Briefcase, Calendar, CheckCircle2, ChevronRight, Zap } from 'lucide-react';
 
 const experiences = [
   {
@@ -9,11 +8,11 @@ const experiences = [
     period: 'Jan 2025 – Apr 2026',
     bullets: [
       'Designed and deployed a proof-of-concept for AWS Client VPN, enabling secure remote access to internal infrastructure and reducing dependency on on-premise VPN solutions.',
-      'Developed a User Access Review (UAR) tool to automate and streamline periodic access audits across internal systems — reducing manual review effort and improving compliance coverage.',
-      'Automated Freshservice ticket workflows using scripting and integration pipelines, reducing manual ticket handling time and improving IT operations efficiency.',
-      'Gained production-level exposure to CI/CD pipelines, containerisation (Docker), and infrastructure management, building a strong deployment and monitoring mindset for AI model delivery.'
+      'Developed a User Access Review (UAR) tool to automate and streamline periodic access audits across internal systems.',
+      'Automated Freshservice ticket workflows using scripting and integration pipelines.',
+      'Gained production-level exposure to CI/CD pipelines, containerisation (Docker), and infrastructure management.'
     ],
-    highlights: ['AWS VPN', 'UAR Automation', 'CI/CD & Docker', 'Freshservice Scripting']
+    highlights: ['AWS VPN', 'UAR Automation', 'CI/CD & Docker']
   },
   {
     role: 'AI/ML Intern',
@@ -24,88 +23,67 @@ const experiences = [
       'Integrated LLM for contextual summarisation — improved document processing speed by 60% and query response accuracy by 95%.',
       'Engineered a Streamlit UI with error handling, text cleaning, and FAISS-based semantic search.'
     ],
-    highlights: ['RAG System', 'Contextual Summarization', '60% Processing Speedup', '95% Query Accuracy']
+    highlights: ['RAG System', 'Contextual Summarization', 'FAISS']
   }
 ];
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-20 relative overflow-hidden bg-black">
-
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="experience" className="py-24 bg-black border-b border-white/10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
-        <div className="mb-16 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold font-outfit text-white">Professional Experience</h2>
-          <p className="text-zinc-400 mt-2 max-w-md mx-auto text-sm">
-            Bridging AI models with DevOps infrastructure for secure, scalable systems.
-          </p>
-          <div className="w-12 h-1 bg-white mx-auto mt-4 rounded-full"></div>
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+          
+          {/* Brutalist Heading */}
+          <div className="md:col-span-1">
+            <h2 className="text-4xl sm:text-5xl font-bold font-outfit text-white uppercase tracking-tighter sticky top-24">
+              Experience
+            </h2>
+          </div>
 
-        {/* Timeline Container */}
-        <div className="relative border-l border-gray-200 dark:border-gray-800 ml-2 sm:ml-6 space-y-12">
-          {experiences.map((exp, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 35 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: idx * 0.15 }}
-              viewport={{ once: true }}
-              className="relative pl-6 sm:pl-10 group"
-            >
-              {/* Timeline dot */}
-              <div className="absolute -left-[9px] top-1.5 h-4 w-4 rounded-full border-2 border-zinc-700 bg-black group-hover:bg-white transition-colors duration-300"></div>
-
-              {/* Card Container */}
-              <div className="minimal-card p-6 hover:border-white/20 transition-all duration-300">
-                
-                {/* Meta details */}
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-white/5 pb-4 mb-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-white font-outfit transition-colors">
-                      {exp.role}
-                    </h3>
-                    <p className="text-sm font-semibold text-zinc-400 mt-0.5">
-                      {exp.company}
-                    </p>
+          <div className="md:col-span-3">
+            <div className="border-t border-white/10">
+              {experiences.map((exp, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
+                  className="py-12 border-b border-white/10 grid grid-cols-1 sm:grid-cols-12 gap-8"
+                >
+                  {/* Period & Company */}
+                  <div className="sm:col-span-4">
+                    <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2">{exp.period}</p>
+                    <h3 className="text-2xl font-bold text-white uppercase leading-none">{exp.company}</h3>
+                    <p className="text-sm font-medium text-zinc-400 mt-2">{exp.role}</p>
                   </div>
-                  <span className="inline-flex items-center text-xs font-semibold text-zinc-400 bg-white/5 px-3 py-1 rounded-full border border-white/5">
-                    <Calendar className="h-3.5 w-3.5 mr-1" /> {exp.period}
-                  </span>
-                </div>
+                  
+                  {/* Details */}
+                  <div className="sm:col-span-8">
+                    <ul className="space-y-4 text-sm sm:text-base text-zinc-400">
+                      {exp.bullets.map((bullet, bIdx) => (
+                        <li key={bIdx} className="flex items-start">
+                          <span className="text-white mr-3 mt-1 text-xs">■</span>
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
 
-                {/* Bullets */}
-                <ul className="space-y-3 mb-6 text-sm text-zinc-400">
-                  {exp.bullets.map((bullet, bIdx) => (
-                    <li key={bIdx} className="flex items-start">
-                      <ChevronRight className="h-4 w-4 mr-2 text-zinc-500 mt-0.5 flex-shrink-0" />
-                      <span>{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Highlights badges */}
-                <div className="flex flex-wrap gap-1.5 border-t border-white/5 pt-4">
-                  {exp.highlights.map((high, hIdx) => {
-                    const isMetric = high.includes('%') || high.includes('Speedup') || high.includes('Accuracy');
-                    return (
-                      <span
-                        key={hIdx}
-                        className="inline-flex items-center text-[10px] sm:text-xs font-bold px-2.5 py-1 rounded-md border bg-white/5 text-zinc-300 border-white/10"
-                      >
-                        {isMetric && <Zap className="h-3 w-3 mr-1 opacity-50" />}
-                        {high}
-                      </span>
-                    );
-                  })}
-                </div>
-
-              </div>
-            </motion.div>
-          ))}
+                    {/* Minimal Tags */}
+                    <div className="flex flex-wrap gap-2 mt-6">
+                      {exp.highlights.map((high, hIdx) => (
+                        <span key={hIdx} className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest border border-white/20 text-white">
+                          {high}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
-
       </div>
     </section>
   );

@@ -1,31 +1,28 @@
 import React from 'react';
-import { Terminal } from 'lucide-react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-
+  
   return (
-    <footer className="border-t border-white/5 bg-black py-8">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+    <footer className="bg-black py-12 border-t border-white/20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           
-          {/* Logo / Tech Identity */}
-          <div className="flex items-center space-x-2 text-sm font-semibold font-outfit text-zinc-400">
-            <Terminal className="h-4 w-4 text-white" />
-            <span>Devesh Ravichandran Portfolio</span>
+          <div className="text-center md:text-left">
+            <h2 className="text-2xl font-bold font-outfit text-white uppercase tracking-tighter">
+              Devesh Ravichandran
+            </h2>
+            <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest mt-2">
+              AI/ML Engineer & Applied AI Builder
+            </p>
           </div>
 
-          {/* Copyright text */}
-          <p className="text-xs text-zinc-500 text-center sm:text-left">
-            &copy; {currentYear} Devesh Ravichandran. All rights reserved.
-          </p>
+          <div className="text-xs font-bold text-zinc-600 uppercase tracking-widest text-center md:text-right">
+            &copy; {currentYear} ALL RIGHTS RESERVED.
+            <br />
+            <span className="text-[9px]">ENGINEERED IN PURE CSS & REACT</span>
+          </div>
 
-          {/* Tech Stack signature */}
-          <p className="text-xs text-zinc-500 text-center sm:text-right">
-            Built with{' '}
-            <span className="text-zinc-300 font-medium">React + Vite + Tailwind CSS</span>
-          </p>
-          
         </div>
       </div>
     </footer>
