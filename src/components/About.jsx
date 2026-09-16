@@ -34,7 +34,7 @@ export default function About() {
               <div>
                 <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">Education</h3>
                 <p className="text-xl font-bold text-white uppercase">SRM IST</p>
-                <p className="text-sm text-zinc-400 mt-1">B.Tech CSE (AI & ML)<br/>CGPA: 7.85</p>
+                <p className="text-sm text-zinc-400 mt-1">B.Tech CSE (AI & ML)<br/>CGPA: 7.2</p>
               </div>
 
               <div>
