@@ -60,16 +60,27 @@ export default function Hero() {
               Building deterministic AI systems for real-world domains. Bridging the gap between robust machine learning models and production DevOps infrastructure.
             </p>
             
-            {/* Minimalist CTA */}
-            <a
-              href="/Devesh_Ravichandran_Resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center space-x-2 border-b border-white pb-1 text-white hover:text-zinc-400 hover:border-zinc-400 transition-colors duration-300 whitespace-nowrap"
-            >
-              <span className="text-sm sm:text-base font-bold uppercase tracking-wider">View Resume</span>
-              <ArrowUpRight className="h-5 w-5 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-            </a>
+            {/* Minimalist CTAs */}
+            <div className="flex flex-col gap-4">
+              <a
+                href="/Devesh_Ravichandran_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center space-x-2 border-b border-white pb-1 text-white hover:text-zinc-400 hover:border-zinc-400 transition-colors duration-300 whitespace-nowrap w-fit"
+              >
+                <span className="text-sm sm:text-base font-bold uppercase tracking-wider">Resume (Global)</span>
+                <ArrowUpRight className="h-5 w-5 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </a>
+              <a
+                href="/Devesh_Ravichandran_Resume_UAE.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center space-x-2 border-b border-white pb-1 text-white hover:text-zinc-400 hover:border-zinc-400 transition-colors duration-300 whitespace-nowrap w-fit"
+              >
+                <span className="text-sm sm:text-base font-bold uppercase tracking-wider">Resume (UAE)</span>
+                <ArrowUpRight className="h-5 w-5 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </a>
+            </div>
           </motion.div>
 
         </div>
